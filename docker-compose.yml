@@ -1,0 +1,19 @@
+services:
+  mib:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: biop-mib:latest
+    container_name: biop-mib
+    restart: unless-stopped
+    shm_size: 2gb
+    tty: true
+    stdin_open: true
+    ports:
+      - "5901:5901"
+      - "6901:6901"
+      - "8888:8888"
+    environment:
+      - VNC_RESOLUTION=1280x1024
+    volumes:
+      - ./data:/home/user/data
