@@ -36,11 +36,19 @@ The Linux standalone installation flow follows the official MIB instructions:
 - Choose the installation folder
 - Choose the installation folder for the MATLAB runtime if prompted
 - Accept the license agreement and complete the install
-- Start MIB from a terminal using the generated launcher script and the MCR path, for example:
+- Start MIB from a terminal using the generated launcher script and the MATLAB Runtime root. In the standalone R2024b bundle, the runtime root is typically `/opt/MIB/R2024b`; the native libraries are under `/opt/MIB/R2024b/runtime/glnxa64`.
 
   ```bash
-  /path/to/your/install/application/run_MIB.sh /path/to/your/MATLAB/Runtime/v97
+  /opt/MIB/application/run_MIB.sh /opt/MIB/R2024b
   ```
+
+  If you are launching from a separate MATLAB Runtime installation, use the equivalent runtime root instead, for example:
+
+  ```bash
+  /path/to/your/install/application/run_MIB.sh /path/to/your/MATLAB/Runtime/v98
+  ```
+
+  Do not pass the `glnxa64` subfolder itself to `run_MIB.sh`; the script expects the runtime root directory.
 
 - If the size of the MIB window is not optimal, adjust the GUI scaling
 - Access help and tutorials from the MIB menu: `im_browser -> Menu -> Help -> Help`
