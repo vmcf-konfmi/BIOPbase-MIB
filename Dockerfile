@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     unzip \
     ca-certificates \
+    binutils \
     libgl1 \
     libglx0 \
     libglib2.0-0 \
@@ -30,6 +31,11 @@ RUN curl -sSL -L "https://github.com/Ajaxels/MIB2/releases/download/v2.93/MIB2_L
     unzip MIB2_Linux.zip && \
     chmod +x MIB2_Linux.install && \
     ./MIB2_Linux.install -mode silent -agreeToLicense yes -destinationFolder /opt/MIB && \
+    # MATLAB Runtime libraries packaged by the standalone installer may have an
+    # executable stack flag set. Recent Linux kernels reject that and fail with
+    # "cannot enable executable stack as shared object requires". Clear it on the
+    # bundled runtime before launching MIB.
+    find /opt/MIB -type f -name "*.so" -exec execstack -c {} + 2>/dev/null || true && \
     rm -rf /tmp/mib_installer
 
 # Set up a launcher that resolves the MATLAB runtime root and starts MIB as the
